@@ -32,7 +32,7 @@ class TableViewController: UITableViewController {
             guard let degree = self.weather?.degreeTempCurrent else {
             return
         }
-            degreeLb.text = "\(degree)"
+            degreeLb.text = "\(degree)⚬"
     }
 }
     override func viewDidLoad() {
@@ -102,7 +102,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WeatherCollectionViewCell
         if let weather = DataServices.shared.weathers?.weatherDays[0].weatherHourDay[indexPath.row] {
             
-            cell.tempHour.text = "\(weather.tempCHourDay)"
+            cell.tempHour.text = "\(weather.tempCHourDay)⚬"
             cell.timeHour.text = hourDay(hour: weather.timeHourDay)
             cell.iconHour.downloadImage(from: weather.iconHourDay)
         }
