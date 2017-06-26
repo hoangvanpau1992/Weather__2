@@ -10,7 +10,7 @@ import Foundation
 typealias JSON = Dictionary<AnyHashable,Any>
 
 struct WeatherDays {
-    var degreeTempCurrent: Double
+    var degreeTempCurrent: Int
     var conditionTextCurrent: String
     var imgURLIconCurrent: String
     var cityName: String
@@ -63,7 +63,7 @@ struct WeatherDays {
         self.cityName = cityName
         self.lastUpdatEdepochCurrent = lastUpdatEdepoch
         self.conditionTextCurrent = textCurrent
-        self.degreeTempCurrent = tempCurrent
+        self.degreeTempCurrent = Int(tempCurrent)
         self.imgURLIconCurrent = "http:\(iconCurrent)"
     }
 }
@@ -71,8 +71,8 @@ struct WeatherDays {
 class WeatherDay {
     var dateEpoch: TimeInterval
     var iconDay: String
-    var maxtempC: Double
-    var mintempC: Double
+    var maxtempC: Int
+    var mintempC: Int
     var weatherHourDay: [WeatherHourDay] = []
     
     init?(json: JSON) {
@@ -99,8 +99,8 @@ class WeatherDay {
             }
         }
         self.dateEpoch = dateEpoch
-        self.mintempC = mintempC
-        self.maxtempC = maxtempC
+        self.mintempC = Int(mintempC)
+        self.maxtempC = Int(maxtempC)
         self.iconDay = "http:\(iconDay)"
         
         
@@ -108,7 +108,7 @@ class WeatherDay {
 }
 class WeatherHourDay {
     var timeHourDay: TimeInterval
-    var tempCHourDay: Double
+    var tempCHourDay: Int
     var iconHourDay: String
     
     init?(json: JSON) {
@@ -124,7 +124,7 @@ class WeatherHourDay {
             return nil
         }
         self.timeHourDay = timeEpoch
-        self.tempCHourDay = tempC
+        self.tempCHourDay = Int(tempC)
         self.iconHourDay = "http:\(iconHour)"
     }
 }

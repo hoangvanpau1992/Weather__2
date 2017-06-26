@@ -21,6 +21,7 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var maxTempCLb: UILabel!
     @IBOutlet weak var minTempCLb: UILabel!
     @IBOutlet weak var toDayOfWeek: UILabel!
+    @IBOutlet weak var today: UILabel!
     
      var identifierCountry = "VI"
     var weatherDay: WeatherDay?
@@ -32,11 +33,13 @@ class TableViewController: UITableViewController {
             guard let degree = self.weather?.degreeTempCurrent else {
             return
         }
-            degreeLb.text = "\(degree)⚬"
+            degreeLb.text = "\(degree)º"
     }
 }
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.isHidden = true
+        today.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(updateData), name: NotificationKey.data, object: nil)
     }
     deinit {
@@ -44,6 +47,8 @@ class TableViewController: UITableViewController {
     }
     func updateData() {
         self.collectionView.reloadData()
+        self.collectionView.isHidden = false
+        self.today.isHidden = false
         self.weather = DataServices.shared.weathers
         self.weatherDay = DataServices.shared.weathers?.weatherDays[0]
         maxTempCLb.text = "\(weatherDay?.maxtempC ?? 0)"
@@ -102,7 +107,7 @@ extension TableViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WeatherCollectionViewCell
         if let weather = DataServices.shared.weathers?.weatherDays[0].weatherHourDay[indexPath.row] {
             
-            cell.tempHour.text = "\(weather.tempCHourDay)⚬"
+            cell.tempHour.text = "\(weather.tempCHourDay)º"
             cell.timeHour.text = hourDay(hour: weather.timeHourDay)
             cell.iconHour.downloadImage(from: weather.iconHourDay)
         }
