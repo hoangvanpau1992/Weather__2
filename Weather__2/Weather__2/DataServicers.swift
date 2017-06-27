@@ -17,6 +17,26 @@ class DataServices {
     }
     
     var weathers : WeatherDays?
+    private var _weatherHour: [WeatherHourDay]?
+    var weatherHour: [WeatherHourDay] {
+        get {
+            if _weatherHour == nil {
+                getHour()
+            }
+            return _weatherHour ?? []
+        }
+        set {
+            _weatherHour = newValue
+        }
+    }
+    func getHour(){
+        if let timCurrent = weathers?.lastUpdatEdepochCurrent {
+            _weatherHour = weathers?.weatherDays[0].weatherHourDay.filter({ $0.timeHourDay > timCurrent
+                
+            })
+            
+        }
+    }
     
     private func  weatherAtLocation(locationString: String) {
         let baseUrl = "http://api.apixu.com/v1/forecast.json?&days=7"

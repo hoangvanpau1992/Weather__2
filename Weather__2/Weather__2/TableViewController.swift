@@ -95,18 +95,19 @@ class TableViewController: UITableViewController {
 }
 extension TableViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let number = DataServices.shared.weathers?.weatherDays[0].weatherHourDay.count else {
-            return 0
-        }
-        return number
+        return DataServices.shared.weatherHour.count+1
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WeatherCollectionViewCell
-        if let weather = DataServices.shared.weathers?.weatherDays[0].weatherHourDay[indexPath.row] {
-            
+        if indexPath.row == 0 {
+            cell.timeHour.text = "Bây giờ"
+            cell.iconHour.downloadImage(from: DataServices.shared.weathers?.imgURLIconCurrent ?? "")
+            cell.tempHour.text = "\(DataServices.shared.weathers?.degreeTempCurrent ?? 0)º"
+        } else {
+            let weather = DataServices.shared.weatherHour[indexPath.row-1]
             cell.tempHour.text = "\(weather.tempCHourDay)º"
             cell.timeHour.text = hourDay(hour: weather.timeHourDay)
             cell.iconHour.downloadImage(from: weather.iconHourDay)

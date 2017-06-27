@@ -8,8 +8,11 @@
 
 import UIKit
 extension UIImageView {
-    func downloadImage(from url: String) {
-        let urlRrquest = URLRequest(url: URL(string: url)!)
+    func downloadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        let urlRrquest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRrquest) { (data, response, error) in
             if error == nil {
                 DispatchQueue.main.async {
